@@ -1,6 +1,6 @@
 ---
 title: "homework1"
-author: lka2128
+author: liam albert
 output: github_document
 date: "2026-09-25"
 ---
@@ -19,23 +19,89 @@ data("penguins", package = "palmerpenguins")
 
 ## Question 1
 
-There are 3 species of penguins listed; Adelie, Gentoo, and Chinstrap.
+**Data Set Description **
 
-The important variables are: species, island, bill_length_mm, bill_depth,mm, flipper_length_mm, body_mass_g, sex, and year.
+* There are 3 species of penguins listed; Adelie, Gentoo, and Chinstrap.
 
-The penguins dataset contains `r nrow(penguins)` observations and `r ncol(penguins)` variables.
+* The important variables are: species, island, bill_length_mm, bill_depth,mm, flipper_length_mm, body_mass_g, sex, and year.
 
-The mean flipper legnth is `r round(mean(penguins$flipper_length_mm, na.rm = TRUE), 2)` mm.
+* The penguins dataset contains `r nrow(penguins)` observations and `r ncol(penguins)` variables.
+
+* The mean flipper legnth is `r round(mean(penguins$flipper_length_mm, na.rm = TRUE), 2)` mm.
+
+
 
 ```{r}
 names(penguins)
 
 head(penguins)
+```
 
+**Building a Scatter Plot**
+
+```{r}
 ggplot(data = penguins, 
       aes(x = bill_length_mm, y = flipper_length_mm, color = species) ) + geom_point()
 
 ggsave("penguin_plot.png")
 
 ```
+
+## Question 2
+
+Create a data frame comprised of:
+
+* a random sample of size 10 from a standard Normal distribution
+* a logical vector indicating whether elements of the sample are greater than 0
+* a character vector of length 10
+* a factor vector of length 10, with 3 different factor “levels”
+
+**Building a data frame:**
+```{r}
+df = tibble(
+random_sample = rnorm(10),
+
+logical_vec = random_sample > 0,
+
+character_vec = c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"),
+
+factor_vec = factor(c("A", "B", "C","A", "B", "C","A", "B", "C","A"))
+)
+
+df
+
+
+```
+
+**Means of each variable:**
+
+* The mean of random_sample is `r mean(pull(df,random_sample))`
+
+* The mean of logical_vec is `r mean(pull(df,logical_vec))`
+
+
+
+```{r}
+mean(pull(df,random_sample))
+
+mean(pull(df,logical_vec))
+
+mean(pull(df,character_vec))
+
+mean(pull(df,factor_vec))
+```
+
+**Variable conversion**
+```{r results = 'hide'}
+
+as.numeric(pull(df,logical_vec))
+
+as.numeric(pull(df,character_vec))
+
+as.numeric(pull(df,factor_vec))
+```
+
+### Explanation
+
+These `mean` command works for these values because random_sample is already numeric, and R treats logical_vec as a binary of 1=true and 0=false. When we run the same command on character variables, we are returned with an `NA` and warning message. By applying `as.numeric` to the factor_vec we can convert the values to represent the 3 levels. This shows that R can calculate a mean when values are numeric and although R can convert factor vectors to numeric type, the values are not meaningful, so taking their means would not have any interpretation.
 
