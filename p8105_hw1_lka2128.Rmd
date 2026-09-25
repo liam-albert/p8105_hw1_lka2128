@@ -4,3 +4,38 @@ author: lka2128
 output: github_document
 date: "2026-09-25"
 ---
+
+## Loading packages
+```{r message= F}
+library(tidyverse)
+
+data("penguins", package = "palmerpenguins")
+
+
+```
+
+
+
+
+## Question 1
+
+There are 3 species of penguins listed; Adelie, Gentoo, and Chinstrap.
+
+The important variables are: species, island, bill_length_mm, bill_depth,mm, flipper_length_mm, body_mass_g, sex, and year.
+
+The penguins dataset contains `r nrow(penguins)` observations and `r ncol(penguins)` variables.
+
+The mean flipper legnth is `r round(mean(penguins$flipper_length_mm, na.rm = TRUE), 2)` mm.
+
+```{r}
+names(penguins)
+
+head(penguins)
+
+ggplot(data = penguins, 
+      aes(x = bill_length_mm, y = flipper_length_mm, color = species) ) + geom_point()
+
+ggsave("penguin_plot.png")
+
+```
+
